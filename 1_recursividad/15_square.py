@@ -6,25 +6,25 @@ def clear_screen():
     os.system("cls" if os.name=="nt" else "clear")
 
 
-def square_root(number: int) -> int: # 100
+def square_root(number: int, start: int = 0, end: int = 0) -> int:   
 
-    if number < 0:
+    middle = (start + end) // 2
 
-        raise ValueError("Square root of negative number is not defined.")
+    if end < start:
 
-    if number < 2:
+        return end
 
-        return number
- 
-    small_root = square_root(number >> 2)
+    if middle * middle == number:
 
-    guess = small_root << 1
+        return middle
 
-    if (guess + 1) * (guess + 1) <= number:
-        
-        return guess + 1
-    
-    return guess    
+    elif number < middle * middle:
+
+        return square_root(number, start, middle - 1)
+
+    else:
+
+        return square_root(number, middle + 1, end)      
 
 
 if __name__ == "__main__":
@@ -58,4 +58,4 @@ if __name__ == "__main__":
             input("Enter an integer number, please...")
 
 
-    print(f"The integer square root of {number} is {square_root(number)}")
+    print(f"The integer square root of {number} is {square_root(number, 0, number)}")
